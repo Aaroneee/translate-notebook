@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class NoteBookListResponse {
     private List<NoteBookListResponse.NoteBookData> noteBookDataList;
-    private BaiduTransUtil.SuccessResult baiduResult;
+    private BaiduTransUtil.SuccessResult baiduResultDataList;
 
     @EqualsAndHashCode(callSuper = true)
     @Data

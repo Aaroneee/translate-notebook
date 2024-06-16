@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author Aaron
@@ -21,7 +21,7 @@ public interface INoteBookService extends IService<NoteBook> {
      * @author Aaron
      * @date 2024/6/6 19:22
      */
-    NoteBookListResponse queryList(String text);
+    NoteBookListResponse queryList(String text, Integer type);
 
     /**
      * @description: 添加翻译文本

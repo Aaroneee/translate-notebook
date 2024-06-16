@@ -18,7 +18,7 @@ import java.beans.Transient;
  * @since 2024-06-06
  */
 @RestController
-@RequestMapping("/note-book")
+@RequestMapping("/noteBook")
 public class NoteBookController {
 
     @Autowired
@@ -33,8 +33,8 @@ public class NoteBookController {
      * @date 2024/6/6 19:17
      */
     @GetMapping("/queryList")
-    public ResultInfo<?> queryList(String text) {
-        return result.success(iNoteBookService.queryList(text));
+    public ResultInfo<?> queryList(String text,Integer type) {
+        return result.success(iNoteBookService.queryList(text,type));
     }
 
     /**
@@ -45,7 +45,7 @@ public class NoteBookController {
     @PutMapping("/addNoteBook")
     @Transient
     public ResultInfo<?> addNoteBook(@RequestBody NoteBook noteBook) {
-        iNoteBookService.addNoteBook(noteBook);
+         iNoteBookService.addNoteBook(noteBook);
         return result.success();
     }
 

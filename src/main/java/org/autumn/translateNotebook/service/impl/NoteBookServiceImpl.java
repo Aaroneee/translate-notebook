@@ -7,6 +7,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.StringUtils;
+import org.autumn.translateNotebook.constant.TranslationTypeEnum;
 import org.autumn.translateNotebook.entity.NoteBook;
 import org.autumn.translateNotebook.mapper.NoteBookMapper;
 import org.autumn.translateNotebook.model.output.NoteBookListResponse;
@@ -37,14 +38,14 @@ public class NoteBookServiceImpl extends ServiceImpl<NoteBookMapper, NoteBook> i
     private NoteBookMapper noteBookMapper;
 
     @Override
-    public NoteBookListResponse queryList(String text) {
+    public NoteBookListResponse queryList(String text,Integer type) {
         NoteBookListResponse noteBookListResponse = new NoteBookListResponse();
         QueryWrapper<NoteBook> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(text)) {
             queryWrapper.and(item -> item.like(NoteBook.SOURCE_TEXT, text).or().like(NoteBook.TARGET_TEXT, text));
 
             //获得百度翻译
-            noteBookListResponse.setBaiduResult(BaiduTransUtil.getTransResult(text, 0));
+            noteBookListResponse.setBaiduResultDataList(BaiduTransUtil.getTransResult(text, TranslationTypeEnum.getEnumByType(type)));
         }
 
         noteBookListResponse.setNoteBookDataList(noteBookMapper.queryList(queryWrapper));

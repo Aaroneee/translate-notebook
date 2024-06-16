@@ -9,26 +9,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.autumn.translateNotebook.constant.TranslationTypeEnum;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BaiduTransUtil {
-    private final static String appId="20210918000949305";
-    private final static String privateKey="2hSXC2uOnueWBh_U7CZv";
+    private final static String appId = "20210918000949305";
+    private final static String privateKey = "2hSXC2uOnueWBh_U7CZv";
 
-    public static SuccessResult getTransResult(String text,Integer type){
-        Map<String,Object> map=new HashMap<>();
+    public static SuccessResult getTransResult(String text, TranslationTypeEnum translationTypeEnum) {
+        Map<String, Object> map = new HashMap<>();
 
-        Long salt=System.currentTimeMillis()/1000;
-        String sign=appId+text+salt+privateKey;
+        Long salt = System.currentTimeMillis() / 1000;
+        String sign = appId + text + salt + privateKey;
 
-        map.put("q",text);
-        map.put("from","auto");
-        map.put("to","en");
-        map.put("appid",appId);
-        map.put("salt",salt);
+        map.put("q", text);
+        map.put("from", translationTypeEnum.getFrom());
+        map.put("to", translationTypeEnum.getTo());
+        map.put("appid", appId);
+        map.put("salt", salt);
         map.put("sign", SecureUtil.md5(sign));
 
         String result = HttpRequest.post("https://fanyi-api.baidu.com/api/trans/vip/translate")
@@ -44,7 +45,7 @@ public class BaiduTransUtil {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class SuccessResult{
+    public static class SuccessResult {
         private String from;
         private String to;
         private List<SuccessResultList> transResult;
@@ -54,7 +55,7 @@ public class BaiduTransUtil {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class SuccessResultList{
+    public static class SuccessResultList {
         private String src;
         private String dst;
     }
